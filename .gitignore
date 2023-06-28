@@ -3,3 +3,4 @@
 data/emerson/
 data/universal_TCR_pool/
 scripts/figures/
+*/__pycache__/
