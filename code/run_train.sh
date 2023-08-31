@@ -4,7 +4,7 @@
 #SBATCH --mem=50G
 #SBATCH --out=logs/train.out
 #SBATCH --error=logs/train.error
-#SBATCH --mail-user=antti.t.huttunen@aalto.fi
+#SBATCH --mail-user=<Your email>
 #SBATCH --mail-type=BEGIN
 #SBATCH --mail-type=FAIL
 
