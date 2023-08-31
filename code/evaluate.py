@@ -2,7 +2,7 @@ import os
 import pandas as pd 
 import numpy as np
 from tqdm import tqdm 
-#import scipy.stats as stats
+import scipy.stats as stats
 import torch
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer 
@@ -141,6 +141,15 @@ def main():
         pickle.dump(cdr3_probs, f)
     f.close()
     print("saving was successfull!")
+
+    record = np.array(list(cdr3_probs.values()))
+
+    record_sum = np.sum(record)
+    record = record/record_sum
+    corr = stats.pearsonr(p_data,record)[0]
+    print('Pearson correlation coefficient are : {}'.format(str(round(corr,4))))
+
+    ### Output will be found in logs/evaluate.out
 
 if __name__ == '__main__':
     main()

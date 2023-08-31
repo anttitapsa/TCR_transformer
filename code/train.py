@@ -103,6 +103,7 @@ def train(train_set,
 if __name__ == '__main__':
     torch.set_default_dtype(torch.float64)
     '''
+    # Argument parser to be finished
     parser = argparse.ArgumentParser()
     parser.add_argument("-lm", "--loadmodel", action = "store_true")
     parser.add_argument("-e", "--epochs", type=int, default=100)
@@ -120,12 +121,13 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained('Rostlab/prot_bert_bfd')
     #config = BertConfig.from_pretrained('Rostlab/prot_bert_bfd')
 
-
+    '''
+    #use this block insted of line 129 if you have saved processed data
     with open('../../scripts/train_set_.pkl', 'rb') as f:
         V_data, CDR3_data, J_data,tgt_data = pickle.load(f)
     f.close()
-
-    #V_data, CDR3_data, J_data,tgt_data = process_data()
+    '''
+    V_data, CDR3_data, J_data,tgt_data = process_data()
     print("Data collected")
 
     train_set = CDR3Dataset(V_data, CDR3_data, J_data, tgt_data, tokenizer)
