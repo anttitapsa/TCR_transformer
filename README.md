@@ -10,7 +10,7 @@ The base for the model is pre-trained [protBERT model](https://huggingface.co/Ro
 ## The structure of the repo
 ```code/```
    
-   Python files to for prosessing Emerson data, process data before training, train model, generate CDR3 sequences, and evaluate model.
+   Python files to for prosessing Emerson data, process data before training, train model, generate CDR3 sequences, and evaluate model. Outputs of run scripts are saved in logs folder which is created when running batch script.
 
 ```data/```
 
