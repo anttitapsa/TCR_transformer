@@ -1,5 +1,7 @@
 # TCR_transformer
 
+project can be found on the location ```/scratch/cs/csb/users/huttuna6/TCR_transformer```on triton. There you can also found more files like trained models.
+
 Deep autoregressive model predicting CDR3 amino acid sequences based on V and J genes amino acid sequences.
 The model is based on the BERT model i.e. transfromer models encoder part. 
 
@@ -38,4 +40,3 @@ Model can be trained by running script ```code/run_train.sh``` on triton. Rememb
 5. The final CDR3 sequences are predicted based on that
 
 
-project can be found on the location ```/scratch/cs/csb/users/huttuna6/TCR_transformer```. There you can found also trained models etc.
