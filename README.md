@@ -38,3 +38,4 @@ Model can be trained by running script ```code/run_train.sh``` on triton. Rememb
 5. The final CDR3 sequences are predicted based on that
 
 
+project can be found on the location ```/scratch/cs/csb/users/huttuna6/TCR_transformer```. There you can found also trained models etc.
