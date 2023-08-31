@@ -5,9 +5,26 @@ The model is based on the BERT model i.e. transfromer models encoder part.
 
 The base for the model is pre-trained [protBERT model](https://huggingface.co/Rostlab/prot_bert_bfd) trained by Rostlab. The weights and bias of protBERT model are copied to Pytorch implementation found in ```code/CustomprotBERT.py```. After copying the weights and bias the model is finetuned for CDR3 prediction task. 
 
+## The structure of the repo
+```code/```
+   
+   Python files to for prosessing Emerson data, process data before training, train model, generate CDR3 sequences, and evaluate model.
+
+```data/```
+
+  Contains files needed to processing the data. Processed Emerson data will be saved here.
+
+```scripts/```
+
+  Jupyter notebooks utilised as in the developing process. REMOVE THESE before publishing the repo.
+
 ## Setup the project 
 
-All needed Python packages can be installed  
+All needed Python packages can be installed using conda environment.
+
+1. On triton load miniconda: ```module load miniconda```
+2. Create environment using ```environment.yml``` file: ```conda create env -f environment.yml```
+3. After the enviroment is solved, it can be activated with command ```source activate TCR-env``` and the environment can be deactivated with command ```conda deactivate```
 
 ## Training the model 
 
@@ -20,7 +37,4 @@ Model can be trained by running script ```code/run_train.sh``` on triton. Rememb
 4. The resulting representations of $[V_v, CDR_1, ..., CDR_{N-1}]$ are extracted
 5. The final CDR3 sequences are predicted based on that
 
-### How to Install and Run the Project
-Test commit. New test commit.
 
-### How to Use the Project
