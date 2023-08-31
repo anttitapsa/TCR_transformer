@@ -1,6 +1,10 @@
 .idea/
 .ipynb_checkpoints/
+.vscode/
+*/__pycache__/
+*.pkl
+code/trained_models/
+code/logs/
 data/emerson/
 data/universal_TCR_pool/
 scripts/figures/
-*/__pycache__/

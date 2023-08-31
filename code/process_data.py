@@ -1,12 +1,8 @@
 import os
-import sys
 import pandas as pd
-import random
-from tqdm import tqdm
 import numba 
 import numpy as np
 import math
-import gc
 
 def load_allele_datadict(data_path):
     trbvs = os.path.join(data_path, "trbvs_full.tsv")
@@ -63,27 +59,30 @@ def replace_v_j(data, dictionary):
 
 @numba.jit(forceobj=True)
 def create_dataset(data):    
-    train_data_src, train_data_trg = [None]*data.shape[0], [None]*data.shape[0]
-    for i in tqdm(range(data.shape[0]), leave=True, position= 0):
-        V = data[i, 5].replace('-', '').replace(' .', '')
+    V_data, J_data, CDR3_data, tgt_data = [None]*data.shape[0], [None]*data.shape[0], [None]*data.shape[0], [None]*data.shape[0]
+    for i in range(data.shape[0]):
+        V = data[i, 5].replace('-', '').replace('.', '')
         idx =V[:-math.ceil(data[i, 2]/3)-1].rfind('C')
-        V_CDR3 = V[:idx]+ (data[i, 0])
-        src_V_CDR3 = " ".join(V[:idx+1])+ (len(data[i, 0])-1)* " [MASK]"
-        J = data[i, 6].replace('-', '')[math.ceil(data[i, 4]/3):]
+        V = V[:idx+1]
         
-        idx2 = len(V_CDR3) - V_CDR3.rfind(J[0])
-        if V_CDR3[-idx2:] == J[:idx2]:
-            trg_str = " ".join(V_CDR3 +J[idx2:]).replace(' .', '')
-            src_str = (src_V_CDR3 +" "+" ".join(J[idx2:])).replace(' .', '')
+        CDR3 = data[i, 0].replace('.', '')[1:]
+        tgt = V + CDR3
+        J = data[i, 6].replace('-', '')[math.ceil(data[i, 4]/3):].replace('.', '')
+        
+        idx2 = len(tgt) - tgt.rfind(J[0])
+        if tgt[-idx2:] == J[:idx2]:
+            J = J[idx2:]
+            tgt = tgt +J
         else:
-            trg_str = " ".join(V_CDR3 + J).replace(' .', '')
-            src_str = (src_V_CDR3 + " " + " ".join(J)).replace(' .', '')
-        train_data_src[i] = src_str
-        train_data_trg[i] = trg_str
-    return train_data_src, train_data_trg
+            tgt = tgt + J
+        V_data[i] = " ".join(V)
+        J_data[i] = " ".join(J)
+        CDR3_data[i] = " ".join(CDR3)
+        tgt_data[i] = " ".join(tgt)
+    return V_data, CDR3_data, J_data,tgt_data
 
 def process_data(train = True):
-    data_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir,  "data"))
+    data_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir, os.pardir, "data"))
     emerson_data_path = os.path.join(data_path, "emerson", "emerson_processed")
 
     tsv_file = "whole_seqs_nn_train.tsv" if train else "whole_seqs_nn_test.tsv"
@@ -104,6 +103,6 @@ def process_data(train = True):
     data = replace_v_j(data_df.to_numpy(), allele_seqs)
     
     print("Masking the dataset...")
-    dataset_src, dataset_trg = create_dataset(data)
-    gc.collect()
-    return dataset_src, dataset_trg
+    V_data, CDR3_data, J_data,tgt_data = create_dataset(data)
+
+    return V_data, CDR3_data, J_data,tgt_data
