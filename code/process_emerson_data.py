@@ -12,7 +12,7 @@ Original script can be found on https://github.com/jiangdada1221/TCRpeg/blob/mai
 This script creates dataset in .tsv format by filtering the Emerson et al TCR dataset which can be found on https://doi.org/10.1038/ng.3822
 
 How to use this code for getting the universal TCR pool from Emerson et al.:
-First put the 743 files of individual repertoires under the folder 'original_data/' and create folder called 'data/'.
+First put the 743 files of individual repertoires under the folder 'original_data/' and create folder called 'data/' (it is allready created in git repo).
 After that run the program on the terminal using below prompt;
 python3 process_data.py
 
@@ -129,15 +129,15 @@ def get_whole_data(files,aa_column_beta=52+1,v_beta_column=52+10,j_beta_column=5
         res['patient_id'] = patient_id
         res['v_deletions'] = v_deletion
         res['j_deletions'] = j_deletion
-        res.to_csv('data/whole_seqs_nn.tsv',sep='\t',mode = 'a',index=False,header=not os.path.isfile('data/whole_seqs_nn.tsv'))
+        res.to_csv('../data/whole_seqs_nn.tsv',sep='\t',mode = 'a',index=False,header=not os.path.isfile('../data/whole_seqs_nn.tsv'))
     
 
-    f = pd.read_csv('data/whole_seqs_nn.tsv',sep=seps[i])
+    f = pd.read_csv('../data/whole_seqs_nn.tsv',sep=seps[i])
     train_set = f.sample(frac= train_frac, random_state = np.random.RandomState(seed=42))
     test_set = f.drop(train_set.index)
 
-    train_set.to_csv('data/whole_seqs_nn_train.tsv', index= False, sep='\t')
-    test_set.to_csv('data/whole_seqs_nn_test.tsv', index=False, sep='\t')
+    train_set.to_csv('../data/whole_seqs_nn_train.tsv', index= False, sep='\t')
+    test_set.to_csv('../data/whole_seqs_nn_test.tsv', index=False, sep='\t')
        
 
 def PassFiltered_(to_filter, frame_bool,in_frame,max_length,filter_genes):
