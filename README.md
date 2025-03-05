@@ -1,6 +1,6 @@
 The project was done during a research internship in the Computational Systems Biology research group at the Department of Computer Science at Aalto University.
 
-# TCR_transformer
+# TCR Transformer
 
 <!--project can be found on the location ```/scratch/cs/csb/users/huttuna6/TCR_transformer```on triton. There you can also found more files like trained models.-->
 
